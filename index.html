@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MQT_RencoBarTimer – NinjaTrader 8 Indicator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Segoe UI, Tahoma, sans-serif;
+  background:#0a0a0a;
+  color:#e0e0e0;
+  line-height:1.6;
+}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header{
+  background:#000;
+  border-bottom:2px solid #00ff00;
+  padding:16px 0;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.brand img{height:60px}
+.brand h1{
+  color:#00ff00;
+  font-size:1.45rem;
+  font-weight:700;
+}
+
+/* Hero */
+.hero{
+  padding:80px 0;
+  text-align:center;
+  background:linear-gradient(135deg,#000,#1a1a1a);
+  border-bottom:3px solid #00ff00;
+}
+.hero h2{
+  color:#00ff00;
+  font-size:2.6rem;
+  margin-bottom:18px;
+}
+.hero p{
+  max-width:1000px;
+  margin:0 auto 32px;
+  font-size:1.15rem;
+  color:#b0b0b0;
+}
+.cta-button{
+  display:inline-block;
+  background:#00ff00;
+  color:#000;
+  padding:14px 40px;
+  font-weight:800;
+  border-radius:5px;
+  text-decoration:none;
+  border:2px solid #00ff00;
+  transition:.25s;
+}
+.cta-button:hover{
+  background:#000;
+  color:#00ff00;
+  box-shadow:0 0 18px rgba(0,255,0,.4);
+}
+
+/* Section title */
+.section-title{
+  text-align:center;
+  color:#00ff00;
+  font-size:2.2rem;
+  margin-bottom:50px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+
+/* Features */
+.features{padding:60px 0;background:#0f0f0f}
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+.feature-card{
+  background:#1a1a1a;
+  border:1px solid #333;
+  border-radius:8px;
+  padding:28px;
+}
+.feature-card h3{color:#00ff00;margin-bottom:12px}
+.feature-card p{color:#b0b0b0}
+
+/* Screenshots */
+.screenshots{padding:60px 0;background:#000}
+.screenshot-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+  gap:30px;
+}
+.screenshot-item{
+  background:#1a1a1a;
+  border:1px solid #333;
+  border-radius:8px;
+  padding:18px;
+}
+.screenshot-item img{
+  width:100%;
+  border-radius:6px;
+  margin-bottom:12px;
+}
+.screenshot-item h3{text-align:center;color:#00ff00}
+.screenshot-item p{text-align:center;color:#9a9a9a;font-size:.95rem}
+
+/* How it works */
+.how-it-works{padding:60px 0;background:#0f0f0f}
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
+.step{
+  background:#1a1a1a;
+  padding:28px;
+  border-left:4px solid #00ff00;
+  border-radius:8px;
+}
+.step-number{
+  width:40px;height:40px;
+  background:#00ff00;color:#000;
+  border-radius:50%;
+  text-align:center;
+  line-height:40px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+.step h3{color:#00ff00;margin-bottom:8px}
+.step p{color:#b0b0b0}
+
+/* Indicator Settings (NEW) */
+.settings{padding:60px 0;background:#000}
+.table-wrap{
+  background:#1a1a1a;
+  border:1px solid #333;
+  border-radius:8px;
+  overflow:hidden;
+}
+table{width:100%;border-collapse:collapse}
+th,td{
+  padding:14px 14px;
+  border-bottom:1px solid #2a2a2a;
+  vertical-align:top;
+}
+th{
+  text-align:left;
+  color:#00ff00;
+  background:#111;
+  font-weight:800;
+}
+td{color:#cfcfcf}
+.note{
+  margin-top:14px;
+  color:#9a9a9a;
+  font-size:.95rem;
+}
+
+/* FAQ (NEW) */
+.faq{padding:60px 0;background:#0f0f0f}
+.faq-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:24px;
+}
+.faq-item{
+  background:#1a1a1a;
+  border:1px solid #333;
+  border-radius:8px;
+  padding:22px;
+}
+.faq-item h3{color:#00ff00;margin-bottom:10px;font-size:1.05rem}
+.faq-item p{color:#b0b0b0}
+
+/* Footer */
+footer{
+  background:#000;
+  border-top:2px solid #00ff00;
+  padding:30px 0;
+  text-align:center;
+}
+footer p{color:#666}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <div class="brand">
+      <img src="https://cdn.abacus.ai/images/9bc233b7-6822-455a-a0f7-789a8e6f85d0.png">
+      <h1>MQT_RencoBarTimer</h1>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h2>Measure How Long Each Renko Bar Takes to Form</h2>
+    <p>
+      MQT_RencoBarTimer tracks the exact amount of time required to form each Renko bar.
+      It displays bar‑formation duration in milliseconds, seconds, minutes, or hours,
+      and optionally shows the live chart time directly on the chart.
+    </p>
+    <a class="cta-button" href="#" onclick="alert('Add checkout URL');return false;">Download Now</a>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2 class="section-title">Key Features</h2>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Bar Formation Timing</h3>
+        <p>Measures how long each Renko bar takes to complete.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Multiple Time Units</h3>
+        <p>Display bar time in milliseconds, seconds, minutes, or hours.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Real‑Time Updating</h3>
+        <p>Updates continuously using OnEachTick calculation.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Session‑Aware Logic</h3>
+        <p>Correctly resets timing at session boundaries.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Optional Chart Time Display</h3>
+        <p>Show current bar time as fixed text in the chart corner.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Clean Sub‑Panel Plot</h3>
+        <p>Displays time values as vertical bars beneath price.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screenshots">
+  <div class="container">
+    <h2 class="section-title">Chart Examples</h2>
+
+    <div class="screenshot-grid">
+      <div class="screenshot-item">
+        <img src="https://cdn.abacus.ai/images/2ca6b251-1d5d-48d1-98b8-b5b16d0e1cc0.png">
+        <h3>Intraday Renko Timing</h3>
+        <p>Seconds required to complete each Renko bar</p>
+      </div>
+
+      <div class="screenshot-item">
+        <img src="https://cdn.abacus.ai/images/395292b6-a134-4014-857e-98c12129a2e4.png">
+        <h3>Session‑Aware Timing</h3>
+        <p>Accurate bar timing across overnight sessions</p>
+      </div>
+
+      <div class="screenshot-item">
+        <img src="https://cdn.abacus.ai/images/3bc0e042-ac50-4b35-b0cf-dc719c6375aa.png">
+        <h3>Volatility Visualization</h3>
+        <p>Quickly identify fast vs slow Renko conditions</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="container">
+    <h2 class="section-title">How It Works</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Track Bar Time</h3>
+        <p>Records the timestamp of each bar transition.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Compute Duration</h3>
+        <p>Calculates elapsed time since the previous bar.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Normalize Units</h3>
+        <p>Converts time into the selected unit.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Plot Results</h3>
+        <p>Displays timing as bars in a dedicated panel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     Indicator Settings (NEW)
+     ========================= -->
+<section class="settings">
+  <div class="container">
+    <h2 class="section-title">Indicator Settings</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34%">Setting</th>
+            <th style="width:18%">Type</th>
+            <th style="width:18%">Typical Values</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Time Unit</td>
+            <td>Dropdown</td>
+            <td>ms / sec / min / hrs</td>
+            <td>Selects the unit used to display bar‑formation duration.</td>
+          </tr>
+          <tr>
+            <td>Show Current Chart Time</td>
+            <td>Boolean</td>
+            <td>On / Off</td>
+            <td>Displays the live chart time as fixed text in a chart corner (optional).</td>
+          </tr>
+          <tr>
+            <td>Text Location</td>
+            <td>Dropdown</td>
+            <td>Top‑Left / Top‑Right / Bottom‑Left / Bottom‑Right</td>
+            <td>Controls where the optional chart‑time text is anchored.</td>
+          </tr>
+          <tr>
+            <td>Plot Style</td>
+            <td>Style</td>
+            <td>Bars / Histogram</td>
+            <td>Controls the appearance of the sub‑panel timing plot.</td>
+          </tr>
+          <tr>
+            <td>Session Reset Behavior</td>
+            <td>Behavior</td>
+            <td>Default</td>
+            <td>Defines how timing resets at session boundaries to prevent carryover across sessions.</td>
+          </tr>
+          <tr>
+            <td>Font / Text Size</td>
+            <td>Style</td>
+            <td>Small / Medium / Large</td>
+            <td>Adjusts the size of any fixed‑text display (if enabled).</td>
+          </tr>
+          <tr>
+            <td>Color Settings</td>
+            <td>Style</td>
+            <td>Default / Custom</td>
+            <td>Controls plot and text colors for visibility on dark charts.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      Note: The exact parameter names and defaults depend on your current build.
+      If you paste the indicator’s NinjaTrader property section (or C# code), I can convert this into
+      exact names + default values (matching your code 1:1).
+    </p>
+  </div>
+</section>
+
+<!-- =========
+     FAQ (NEW)
+     ========= -->
+<section class="faq">
+  <div class="container">
+    <h2 class="section-title">FAQ</h2>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3>Does this work on time‑based charts?</h3>
+        <p>
+          It’s designed for Renko bar formation timing. On time‑based charts, “bar duration” is fixed
+          by the timeframe, so the indicator is most useful on non‑time‑based bars like Renko.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Why do some bars show very small or very large times?</h3>
+        <p>
+          Renko bars form faster during high volatility and slower during low volatility.
+          Session transitions and illiquid periods can also create longer formation times.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Does it repaint?</h3>
+        <p>
+          The live (currently forming) bar’s time will change until that bar completes.
+          Once a bar closes, its measured formation duration is fixed.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>How can I use this for trade filtering?</h3>
+        <p>
+          Many traders use formation time as a volatility proxy—filtering trades when bars are forming
+          unusually fast (high momentum) or unusually slow (chop/low energy).
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Will it reset correctly across overnight sessions?</h3>
+        <p>
+          Yes—session‑aware logic is intended to prevent bar‑time carryover across session boundaries.
+          Your chart’s Trading Hours template still matters.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>What unit should I use?</h3>
+        <p>
+          Seconds are a common default. Use milliseconds for very fast markets/bars,
+          or minutes/hours when bars can take a long time to form.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Does it impact performance?</h3>
+        <p>
+          It updates on each tick to keep the timing accurate. On very high‑tick instruments,
+          that can be heavier than OnBarClose indicators, but it’s typically lightweight.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I change where the chart time text appears?</h3>
+        <p>
+          Yes—enable the optional chart‑time display and choose the corner location in settings.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 myQuantrader.com — All Rights Reserved</p>
+  </div>
+</footer>
+
+</body>
+</html>
